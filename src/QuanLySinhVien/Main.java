@@ -1,45 +1,46 @@
 package QuanLySinhVien;
-import QuanLySinhVien.HocSinh;
-
 
 import java.util.*;
-
 public class Main {
-    private static List<HocSinh[]> hocSinhs  = new ArrayList<HocSinh[]>();
-
-    public static HocSinh[] listHocSinh;
-    public static Scanner scanner = new Scanner(System.in);
-
     public static void main(String[] args) {
         menu();
     }
 
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void menu() {
-        while (true) {
-            System.out.println("--------Menu---------");
-            System.out.println("1.Thêm Sinh Viên Cần Thêm");
-            System.out.println("2.Hiển Thị Các Sinh Viên");
-            System.out.println("3.Tìm Sinh Viên Theo Tên");
-            System.out.println("Please Choose");
+        boolean check = true;
+        List<HocSinh> danhSachSinhVien =new ArrayList<>();
+        while (check) {
+            System.out.println("________Quản Lý Sinh Viên_________");
+            System.out.println("1.Thêm sinh viên");
+            System.out.println("2.Tìm kiếm sinh viên");
+            System.out.println("3.Liệt kê tất cả sinh viên có điểm trung bình lớn hơn 8");
+            System.out.println("4.Sắp xếp sinh viên theo điểm trung bình từ cao đến thấp");
+            System.out.println("5.Liêt kê tất cả sinh viên là nữ và dưới 20 tuổi");
+            System.out.println("6.Exit");
             int so = Integer.parseInt(scanner.nextLine());
-            switch (so) {
+            switch (so){
                 case 1:
-                    themSinhVien();
-                    menu();
+                    themSinhVien(danhSachSinhVien);
                     break;
                 case 2:
-                    hienThiSinhVien();
-                    menu();
+                    timKiemTheoTen(danhSachSinhVien);
                     break;
                 case 3:
-                    timSinhVIen();
-                    menu();
+                    lietKeSVtblonhon8(danhSachSinhVien);
                     break;
-                default:
-                    System.out.println("Vui lòng chọn đúng các số trên");
-                    menu();
+                case 4:
+                    sxSvtheodiemTB(danhSachSinhVien);
                     break;
+                case 5:
+                    lietKeSvTuoiduoi20(danhSachSinhVien);
+                    break;
+                case 6:
+                    check = false;
+                    System.out.println("Exit");
+                    break;
+
 
 
             }
@@ -47,51 +48,67 @@ public class Main {
         }
     }
 
-    public static void themSinhVien() {
-        System.out.println("Mời bạn nhập số lượng sinh viên cần thêm: ");
-        int so = Integer.parseInt(scanner.nextLine());
-        listHocSinh = new HocSinh[so];
-        for (int i = 0; i < so; i++) {
-            System.out.println("Mời nhập thông tin  sinh viên thứ: " + (i + 1));
-            System.out.println("Mời nhập vào tên sinh viên thứ: " + (i + 1));
-            String ten = scanner.nextLine();
-            System.out.println("Mời bạn nhập vào tuổi sinh viên thứ: " + (i + 1));
-            int tuoi = scanner.nextInt();
-            System.out.println("Mời bạn nhập vào trình độ văn hoá của sinh viên thứ:" + ( i + 1 ));
-            String trinh = scanner.nextLine();
-            String trinhdo = scanner.nextLine();
-            System.out.println("Mời bạn nhập giới tính của sinh viên thứ:"+( i + 1 ));
-            String sex = scanner.nextLine();
-            System.out.println("Mời bạn nhập năm sinh của sinh viên thứ: " + (i + 1));
-            int namsinh = Integer.parseInt(scanner.nextLine());
-            HocSinh hocSinh = new HocSinh(ten,tuoi,namsinh,trinh,sex);
-            hocSinhs.add(listHocSinh);
-            listHocSinh[i]= hocSinh ;
-        }
-    }
+    private static void themSinhVien(List<HocSinh> danhSachSinhVienN) {
 
 
-    public static void hienThiSinhVien() {
-        for (int i = 0; i < listHocSinh.length; i++) {
-            listHocSinh[i].inThongTinSinhVien();
-
-        }
+            System.out.println("Mời bạn nhập vào số lượng sinh viên:");
+            int sllc = Integer.parseInt(scanner.nextLine());
+            for (int i = 0; i < sllc; i++) {
+                System.out.println("Mời bạn nhập tên sinh viên thứ:" +(i+1));
+                String tenn = scanner.nextLine();
+                System.out.println("Mời bạn nhập tuổi sinh viên thứ "+(i+1));
+                int tuoi = Integer.parseInt(scanner.nextLine());
+                System.out.println("Mời bạn nhập giới tính của sinh viên thứ:"+(i+1));
+                int gioitinh = Integer.parseInt(scanner.nextLine());
+                System.out.println("Mời bạn nhập điểm của sinh viên thứ :"+(i+1));
+                double diemtbb = Double.parseDouble(scanner.nextLine());
+                danhSachSinhVienN.add(new HocSinh(tenn,tuoi,gioitinh,diemtbb));
+            }
 
     }
 
-    public static void timSinhVIen() {
-        System.out.println("Nhập tên sinh viên cần tìm: ");
-        String search = scanner.nextLine();
-        System.out.println("Sinh viên bạn yêu cầu là:");
-        for (int i = 0; i < listHocSinh.length; i++) {
-            if (listHocSinh[i].getTenSV().equals(search)) {
-                listHocSinh[i].inThongTinSinhVien();
-            }else{
-                System.out.println("Không có sinh viên đã tìm ở lớp này");
+    private static void sxSvtheodiemTB(List<HocSinh> danhSachSinhVien) {
+
+    }
+
+    private static void lietKeSvTuoiduoi20(List<HocSinh> danhSachSinhVien) {
+        System.out.println("Danh sách sinh viên là nữ tuổi dưới 20 là:");
+        for (int i = 0; i < danhSachSinhVien.size(); i++) {
+            if(danhSachSinhVien.get(i).getTuoi()<20 && danhSachSinhVien.get(i).getSex()== 0) {
+                System.out.println(danhSachSinhVien.get(i).toString());
+            }
+        }
+
+    }
+
+    private static void lietKeSVtblonhon8(List<HocSinh> danhSachSinhVien) {
+        System.out.println("Sinh viên có điểm trung bình lớn hơn 8 là");
+        for (int i = 0; i < danhSachSinhVien.size(); i++) {
+           if (danhSachSinhVien.get(i).getDiemTB()>8) {
+               System.out.println(danhSachSinhVien.get(i).toString());
+           }
             }
 
         }
 
+
+
+
+    private static void timKiemTheoTen(List<HocSinh> danhSachSv) {
+
+
+        System.out.println("Nhập tên sinh viên cần tìm:");
+        String name1 = scanner.nextLine();
+        System.out.println("Sinh viên bạn muốn tìm là:");
+        for (int i = 0; i < danhSachSv.size(); i++) {
+            if (danhSachSv.get(i).getTenSV().equals(name1)){
+                System.out.println(danhSachSv.get(i).toString());
+            }
+        }
+
     }
+
+
+
+
 }
-
